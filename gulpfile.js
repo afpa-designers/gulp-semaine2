@@ -4,6 +4,7 @@ var sass = require('gulp-sass'); // => Pour pouvoir charger 'gulp-sass' il faut 
 // installer gulp-sass via la console : npm install --save-dev gulp-sass
 // Warning ! Cette installation est à réaliser pour chaque plugin supplémentaire (voir doc du plugin en question) !!! 
 
+var minify = require('gulp-minify'); 
 
 
 // Notre script : la liste et la définition des tâches que l'on veut effectuer
@@ -18,13 +19,19 @@ gulp.task('scss', (done) => {
 });
 
 
+gulp.task('minifyJS', (done) => {
+    gulp.src('./assets/js/*.js')
+      .pipe(minify())
+      .pipe(gulp.dest('./dist/js/'))
+      done();
+  });
 
 
 
 
 // Fonctions de lancement qui execute nos tâches dans un précis
 
-
+gulp.task('default', gulp.series('scss', 'minifyJS'));
 
 
 
